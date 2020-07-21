@@ -67,6 +67,12 @@ values
 ("Phan Van Khai",date '2000-12-12',"34355121","2123453412","quat@gmail.com","Quang Tri",2),
 ("Nguyen Phu Trong",date '1990-12-12',"34355121","2123453412","quat@gmail.com","Thanh Hoa",2);
 
+insert into KhachHang(ho_ten,ngay_sinh,so_cmnd,sdt,email,dia_chi,id_loai_khach)
+values
+("Rong troi",date '1992-12-12',"34355121","2123453412","quat@gmail.com","My",1),
+("Captain america",date '2010-12-12',"34355121","2123453412","quat@gmail.com","Long Vuong",2),
+("Spider man",date '1990-12-12',"34355121","2123453412","quat@gmail.com","Da Lat",2);
+
 INSERT INTO `furama_project`.`dichvu` (`ten_dich_vu`, `dien_tich`, `so_tang`, `so_nguoi_toi_da`, `chi_phi_thue`, `trang_thai`, `id_kieu_thue`, `id_loai_dich_vu`) 
 VALUES 
 ('house 1', '300', '2', '5', '2000000', 'Avaliable', '1', '1'),
@@ -89,3 +95,13 @@ INSERT INTO `furama_project`.`dichvudikem` (`ten_dich_vu_di_kem`, `gia`, `don_vi
  ('tennis', '50000', '3', 'avaliable'),
  ('golf', '50000', '2', 'avaliable')
  ;
+
+INSERT INTO `furama_project`.`hopdong` (`ngay_lam_hop_dong`, `ngay_ket_thuc`, `tien_dat_coc`, `tong_tien`, `id_nhan_vien`, `id_khach_hang`, `id_dich_vu`) VALUES ('2018-01-12', '2018-02-12', '400000', '5000000', '1', '7', '2');
+INSERT INTO `furama_project`.`hopdong` (`ngay_lam_hop_dong`, `ngay_ket_thuc`, `tien_dat_coc`, `tong_tien`, `id_nhan_vien`, `id_khach_hang`, `id_dich_vu`) VALUES ('2018-02-12', '2018-03-12', '400000', '5000000', '1', '8', '2');
+INSERT INTO `furama_project`.`hopdong` (`ngay_lam_hop_dong`, `ngay_ket_thuc`, `tien_dat_coc`, `tong_tien`, `id_nhan_vien`, `id_khach_hang`, `id_dich_vu`) VALUES ('2018-03-12', '2018-04-12', '400000', '5000000', '1', '9', '1');
+
+
+INSERT INTO `furama_project`.`hopdongchitiet` (`id_hop_dong`, `id_dich_vu_di_kem`, `so_luong`) VALUES ('1', '1', '5');
+INSERT INTO `furama_project`.`hopdongchitiet` (`id_hop_dong`, `id_dich_vu_di_kem`, `so_luong`) VALUES ('2', '3', '2');
+INSERT INTO `furama_project`.`hopdongchitiet` (`id_hop_dong`, `id_dich_vu_di_kem`, `so_luong`) VALUES ('3', '2', '3');
+INSERT INTO `furama_project`.`hopdongchitiet` (`id_hop_dong`, `id_dich_vu_di_kem`, `so_luong`) VALUES ('1', '2', '3');
