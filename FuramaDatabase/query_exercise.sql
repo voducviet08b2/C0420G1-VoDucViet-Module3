@@ -94,6 +94,8 @@ where (k.dia_chi="vinh" or k.dia_chi="quang ngai") and k.id_loai_khach=1;
 
 -- ⦁	Hiển thị thông tin IDHopDong, TenNhanVien, TenKhachHang, SoDienThoaiKhachHang, TenDichVu, SoLuongDichVuDikem (được tính dựa trên tổng Hợp đồng chi tiết), TienDatCoc của tất cả các dịch vụ đã từng được khách hàng đặt vào 3 tháng cuối năm 2019 nhưng chưa từng được khách hàng đặt vào 6 tháng đầu năm 2019.
 
+create view ba_thang_cuoi
+as
 select h.id,n.ho_ten as Ho_ten_Nhan_vien,k.ho_ten as ho_ten_khach_hang,k.sdt,d.ten_dich_vu,hdct.so_luong,h.ngay_lam_hop_dong
 from hopdong h
 inner join hopdongchitiet hdct on h.id=hdct.id_hop_dong
@@ -101,5 +103,101 @@ inner join khachhang k on k.id=h.id_khach_hang
 inner join nhanvien n on n.id=h.id_nhan_vien 
 inner join dichvu d on h.id_dich_vu=d.id
 where year(h.ngay_lam_hop_dong)=2019 and(month(h.ngay_lam_hop_dong)=10 
-or month(h.ngay_lam_hop_dong)=11 or month(h.ngay_lam_hop_dong)=12)
-;
+or month(h.ngay_lam_hop_dong)=11 or month(h.ngay_lam_hop_dong)=12); 
+
+create view sau_thang_dau
+as
+select h.id,n.ho_ten as Ho_ten_Nhan_vien,k.ho_ten as ho_ten_khach_hang,k.sdt,d.ten_dich_vu,hdct.so_luong,h.ngay_lam_hop_dong
+from hopdong h
+inner join hopdongchitiet hdct on h.id=hdct.id_hop_dong
+inner join khachhang k on k.id=h.id_khach_hang 
+inner join nhanvien n on n.id=h.id_nhan_vien 
+inner join dichvu d on h.id_dich_vu=d.id
+where h.id not in(
+select h.id
+from hopdong h
+inner join hopdongchitiet hdct on h.id=hdct.id_hop_dong
+inner join khachhang k on k.id=h.id_khach_hang 
+inner join nhanvien n on n.id=h.id_nhan_vien 
+inner join dichvu d on h.id_dich_vu=d.id
+where year(h.ngay_lam_hop_dong)=2019 and (month(h.ngay_lam_hop_dong)=1 
+or month(h.ngay_lam_hop_dong)=2 or month(h.ngay_lam_hop_dong)=3 or month(h.ngay_lam_hop_dong)=4 or month(h.ngay_lam_hop_dong)=5 or month(h.ngay_lam_hop_dong)=6)
+);
+
+select *
+from ba_thang_cuoi b
+join sau_thang_dau s where b.id=s.id;
+
+-- Hiển thị thông tin các Dịch vụ đi kèm được sử dụng nhiều nhất bởi các Khách hàng đã đặt phòng. (Lưu ý là có thể có nhiều dịch vụ có số lần sử dụng nhiều như nhau).
+
+select dvdk.id,ten_dich_vu_di_kem,count(k.id) as So_lan_su_dung
+from dichvudikem dvdk
+join hopdongchitiet hdct on dvdk.id=hdct.id_dich_vu_di_kem  
+join hopdong h on h.id=hdct.id_hop_dong
+join khachhang k on k.id=h.id_khach_hang 
+group by dvdk.id;
+
+-- Hiển thị thông tin tất cả các Dịch vụ đi kèm chỉ mới được sử dụng một lần duy nhất. Thông tin hiển thị bao gồm IDHopDong, TenLoaiDichVu, TenDichVuDiKem, SoLanSuDung.
+
+select h.id,dvdk.id,ten_dich_vu_di_kem,ldv.ten_loai_dich_vu,dvdk.ten_dich_vu_di_kem,count(h.id_khach_hang) as so_lan_su_dung
+from dichvudikem dvdk
+join hopdongchitiet hdct on dvdk.id=hdct.id_dich_vu_di_kem  
+join hopdong h on h.id=hdct.id_hop_dong
+join dichvu d on d.id=h.id_dich_vu
+join loaidichvu ldv on ldv.id=d.id_loai_dich_vu
+group by dvdk.id
+having so_lan_su_dung<=1;
+
+-- 	Hiển thi thông tin của tất cả nhân viên bao gồm IDNhanVien, HoTen, TrinhDo, TenBoPhan, SoDienThoai, DiaChi mới chỉ lập được tối đa 3 hợp đồng từ năm 2018 đến 2019.
+
+select ho_ten,n.id,sdt,dia_chi,t.trinh_do,vt.ten_vi_tri,count(h.id_nhan_vien) as sohopdong
+from nhanvien n
+inner join hopdong h on n.id=h.id_nhan_vien
+inner join trinhdo t on t.id=n.id_trinh_do
+inner join vitri vt on vt.id=n.id_vi_tri
+where year(h.ngay_lam_hop_dong) =2018 or year(h.ngay_lam_hop_dong) =2019
+group by n.id
+having sohopdong<=3;
+
+-- Xóa những Nhân viên chưa từng lập được hợp đồng nào từ năm 2017 đến năm 2019.
+
+delete from nhanvien
+where id not in(
+select id from(
+select n.id 
+from nhanvien n
+join hopdong h on n.id=h.id_nhan_vien) as c);
+
+-- Cập nhật thông tin những khách hàng có TenLoaiKhachHang từ  Platinium lên Diamond, chỉ cập nhật những khách hàng đã từng đặt phòng với tổng Tiền thanh toán trong năm 2019 là lớn hơn 10.000.000 VNĐ.
+
+create view diamond
+as
+select k.id,k.ho_ten,h.tong_tien,k.id_loai_khach
+from khachhang k
+inner join hopdong h on k.id=h.id_khach_hang 
+where year(ngay_lam_hop_dong)=2019 and tong_tien>=10000000;
+
+update diamond
+set id_loai_khach=1;
+
+--  Xóa những khách hàng có hợp đồng trước năm 2016 (chú ý ràng buộc giữa các bảng).
+
+SET FOREIGN_KEY_CHECKS=0;
+delete from khachhang,hopdong
+using khachhang
+inner join hopdong
+on khachhang.id=hopdong.id_khach_hang 
+where year(hopdong.ngay_lam_hop_dong)<2016 ;
+SET FOREIGN_KEY_CHECKS=1;
+
+-- Cập nhật giá cho các Dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2019 lên gấp đôi.
+
+
+
+-- Hiển thị thông tin của tất cả các Nhân viên và Khách hàng có trong hệ thống, thông tin hiển thị bao gồm ID (IDNhanVien, IDKhachHang), HoTen, Email, SoDienThoai, NgaySinh, DiaChi.
+
+select id,ho_ten,email,sdt,ngay_sinh,dia_chi
+from nhanvien
+union
+select id,ho_ten,email,sdt,ngay_sinh,dia_chi
+from khachhang
