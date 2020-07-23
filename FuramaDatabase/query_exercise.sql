@@ -188,10 +188,23 @@ using khachhang
 inner join hopdong
 on khachhang.id=hopdong.id_khach_hang 
 where year(hopdong.ngay_lam_hop_dong)<2016 ;
-SET FOREIGN_KEY_CHECKS=1;
+
 
 -- Cập nhật giá cho các Dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2019 lên gấp đôi.
 
+create view giagapdoi
+as
+select dvdk.id,ten_dich_vu_di_kem,count(id_dich_vu_di_kem) as So_luong_dich_vu,gia,year(h.ngay_lam_hop_dong) as nam_lam_hop_dong
+from hopdong h
+inner join hopdongchitiet hdct on h.id=hdct.id_hop_dong
+inner join dichvudikem dvdk on hdct.id_dich_vu_di_kem=dvdk.id
+ group by dvdk.id
+ having nam_lam_hop_dong=2019 and So_luong_dich_vu>1;
+
+
+update dichvudikem dvdk
+inner join giagapdoi ggd on dvdk.id= ggd.id 
+set dvdk.gia=dvdk.gia*2;
 
 
 -- Hiển thị thông tin của tất cả các Nhân viên và Khách hàng có trong hệ thống, thông tin hiển thị bao gồm ID (IDNhanVien, IDKhachHang), HoTen, Email, SoDienThoai, NgaySinh, DiaChi.
