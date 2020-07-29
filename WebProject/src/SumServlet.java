@@ -9,17 +9,22 @@ import java.io.PrintWriter;
 @WebServlet(name = "SumServlet",urlPatterns = "/sumServlet")
 public class SumServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+//        String a = request.getParameter("num1");
+//        String b = request.getParameter("num2");
+//        double result = Double.parseDouble(a) + Double.parseDouble(b);
+//
+//        PrintWriter out = response.getWriter();
+//        out.write("<html><body>");
+//        out.write("<p style='color: green'>" + result + "</p>");
+//        out.write("</body></html>");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String a = request.getParameter("num1");
         String b = request.getParameter("num2");
         double result = Double.parseDouble(a) + Double.parseDouble(b);
+        request.setAttribute("resultServlet", result);
+        request.getRequestDispatcher("final.jsp").forward(request, response);
 
-        PrintWriter out = response.getWriter();
-        out.write("<html><body>");
-        out.write("<p style='color: green'>" + result + "</p>");
-        out.write("</body></html>");
     }
 }
