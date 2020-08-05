@@ -13,6 +13,15 @@ public class UserBOimpl implements UserBO {
     public List<User> findAll() {
         return this.userDAO.findAll();
     }
+    @Override
+    public List<User> findAllOrderBy() {
+        return this.userDAO.findAllOrderBy();
+    }
+
+    @Override
+    public List<User> searchByCountry(String country) {
+        return this.userDAO.searchByCountry(country);
+    }
 
     @Override
     public void save(User user) {
@@ -21,5 +30,10 @@ public class UserBOimpl implements UserBO {
     @Override
     public void update(User user) {
         userDAO.update(user);
+    }
+
+    @Override
+    public void delete(User user) {
+        userDAO.delete(user);
     }
 }

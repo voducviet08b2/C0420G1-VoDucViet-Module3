@@ -37,12 +37,32 @@ public class UserServlet extends HttpServlet {
             case "edit":
                 updateUser(request,response);
                 break;
+            case "delete":
+                deleteUser(request,response);
+                break;
+            case "order":
+                showListOrderBy(request,response);
+                break;
+            case "search":
+                searchKeyword(request,response);
+                break;
+
             default:
                 showList(request,response);
                 break;
         }
     }
-
+    public void searchKeyword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String country=request.getParameter("keyword");
+        List<User> listUser = userBO.searchByCountry(country);
+        request.setAttribute("listUser", listUser);
+        request.getRequestDispatcher("show.jsp").forward(request, response);
+    }
+    public void showListOrderBy(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<User> listUser = userBO.findAllOrderBy();
+        request.setAttribute("listUser", listUser);
+        request.getRequestDispatcher("show.jsp").forward(request, response);
+    }
     public void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<User> listUser = userBO.findAll();
         request.setAttribute("listUser", listUser);
@@ -62,13 +82,18 @@ public class UserServlet extends HttpServlet {
 
     public void updateUser(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
 
-        int id=Integer.parseInt(request.getParameter("id"));
-        int idList=id-1;
-        List<User> listUser = userBO.findAll();
 
-        String name=listUser.get(idList).getName();
-        String email=listUser.get(idList).getEmail();
-        String country=listUser.get(idList).getCountry();
+        int id=Integer.parseInt(request.getParameter("id"));
+        int idSearch=0;
+        List<User> listUser = userBO.findAll();
+        for(int i=0;i<listUser.size();i++){
+            if(id==listUser.get(i).getId()){
+                idSearch=i;
+            }
+        }
+        String name=listUser.get(idSearch).getName();
+        String email=listUser.get(idSearch).getEmail();
+        String country=listUser.get(idSearch).getCountry();
         request.setAttribute("id",id);
         request.setAttribute("name",name);
         request.setAttribute("email",email);
@@ -91,4 +116,18 @@ public class UserServlet extends HttpServlet {
         this.showList(request,response);
     }
 
+    public void deleteUser(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
+        int id=Integer.parseInt(request.getParameter("id"));
+        //int idList=id-1;
+        int idSearch=0;
+        List<User> listUser = userBO.findAll();
+        for(int i=0;i<listUser.size();i++){
+          if(id==listUser.get(i).getId()){
+              id=i;
+          }
+        }
+        User user=listUser.get(id);
+        this.userBO.delete(user);
+        this.showList(request,response);
+    }
 }
