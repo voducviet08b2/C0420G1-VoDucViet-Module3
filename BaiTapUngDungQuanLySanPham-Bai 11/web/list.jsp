@@ -2,10 +2,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Customer List</title>
+    <title>Product List</title>
 </head>
 <body>
-<h1>Customers</h1>
+<h1>Danh mục sản phẩm</h1>
 
 <a href="/products?action=create">Thêm sản phẩm mới</a>
 <table border="1">
@@ -25,8 +25,8 @@
             <td><c:out value="${product.name}"></c:out></td>
             <td><c:out value="${product.description}"></c:out></td>
             <td><c:out value="${product.price}"></c:out></td>
-            <td><a href="">Edit</a></td>
-            <td><a href="">Delete</a></td>
+            <td><a href="/products?action=edit&id=${product.id}">Edit</a></td>
+            <td><a href="/products?action=delete&id=${product.id}">Delete</a></td>
         </tr>
     </c:forEach>
 

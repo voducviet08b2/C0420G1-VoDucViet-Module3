@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="c04g-jstl-jdbc:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/c04g_jstl_jdbc_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="c04g-jstl-jdbc/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="c04g-jstl-jdbc" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="D:/Codegym/002-teach/02-theory-support/jsp/jsp-jstl/jstl-1.2.jar" />
+          <element id="library" level="project" name="mysql-connector-java-8.0.11" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

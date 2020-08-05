@@ -187,8 +187,8 @@ delete from khachhang,hopdong
 using khachhang
 inner join hopdong
 on khachhang.id=hopdong.id_khach_hang 
-where year(hopdong.ngay_lam_hop_dong)<2016 ;
-
+where year(hopdong.ngay_lam_hop_dong)<2016;
+SET FOREIGN_KEY_CHECKS=1;
 
 -- Cập nhật giá cho các Dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2019 lên gấp đôi.
 
@@ -205,6 +205,8 @@ inner join dichvudikem dvdk on hdct.id_dich_vu_di_kem=dvdk.id
 update dichvudikem dvdk
 inner join giagapdoi ggd on dvdk.id= ggd.id 
 set dvdk.gia=dvdk.gia*2;
+
+
 
 
 -- Hiển thị thông tin của tất cả các Nhân viên và Khách hàng có trong hệ thống, thông tin hiển thị bao gồm ID (IDNhanVien, IDKhachHang), HoTen, Email, SoDienThoai, NgaySinh, DiaChi.

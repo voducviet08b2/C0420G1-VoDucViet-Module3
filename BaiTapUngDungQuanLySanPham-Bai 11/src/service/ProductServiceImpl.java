@@ -9,14 +9,15 @@ import java.util.Map;
 
 public class ProductServiceImpl implements ProductService {
     private static Map<Integer,Product> products;
+    private static int i=0;
     static {
         products=new HashMap<>();
-        products.put(1, new Product(1, "Miliket", "mì ngon", 45));
-        products.put(2, new Product(2, "Tomi", "kẹo su", 452));
-        products.put(3, new Product(3, "Sida", "cá chép", 454));
-        products.put(4, new Product(4, "Moom", "mèo", 12));
-        products.put(5, new Product(5, "linda", "mực", 4534));
-        products.put(6, new Product(6, "Kop", "chôn", 45213));
+        products.put(1, new Product(++i, "Miliket", "mì ngon", 45));
+        products.put(2, new Product(++i, "Tomi", "kẹo su", 452));
+        products.put(3, new Product(++i, "Sida", "cá chép", 454));
+        products.put(4, new Product(++i, "Moom", "mèo", 12));
+        products.put(5, new Product(++i, "linda", "mực", 4534));
+        products.put(6, new Product(++i, "Kop", "chôn", 45213));
 
     }
     @Override
@@ -26,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void save(Product product) {
-        products.put(product.getId(),product);
+        products.put(++i,product);
     }
 
     @Override
