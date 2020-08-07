@@ -64,7 +64,7 @@ public class UserServlet extends HttpServlet {
         request.getRequestDispatcher("show.jsp").forward(request, response);
     }
     public void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<User> listUser = userBO.findAll();
+        List<User> listUser = userBO.CallFindAll();
         request.setAttribute("listUser", listUser);
         request.getRequestDispatcher("show.jsp").forward(request, response);
     }
@@ -112,7 +112,8 @@ public class UserServlet extends HttpServlet {
         user.setName(name);
         user.setEmail(email);
         user.setCountry(country);
-        this.userBO.update(user);
+        //this.userBO.update(user);
+        this.userBO.updatePro(user);
         this.showList(request,response);
     }
 
@@ -127,7 +128,8 @@ public class UserServlet extends HttpServlet {
           }
         }
         User user=listUser.get(id);
-        this.userBO.delete(user);
+        //this.userBO.delete(user);
+        this.userBO.deletePro(user);
         this.showList(request,response);
     }
 }
