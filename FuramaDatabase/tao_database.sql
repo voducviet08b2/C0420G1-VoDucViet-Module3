@@ -6,6 +6,28 @@ id int primary key auto_increment,
 ten_vi_tri varchar(45) not null
 );
 
+
+
+
+create table user(
+username varchar(255) primary key,
+password varchar(255)
+);
+
+create table role(
+id int primary key auto_increment,
+role_name varchar(255)
+);
+
+create table user_role(
+user_role_id int primary key auto_increment,
+role_id int,
+username varchar(255),
+foreign key (role_id) references role(id),
+foreign key (username) references user(username)
+);
+
+
 create table TrinhDo(
 id int primary key auto_increment,
 trinh_do varchar(45) not null

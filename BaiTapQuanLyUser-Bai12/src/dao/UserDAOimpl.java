@@ -114,9 +114,6 @@ public class UserDAOimpl implements UserDAO{
                 user.setName(resultSet.getString("name"));
                 user.setEmail(resultSet.getString("email"));
                 user.setCountry(resultSet.getString("country"));
-
-
-
                 userList.add(user);
             }
 
