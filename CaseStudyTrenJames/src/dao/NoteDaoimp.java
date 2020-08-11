@@ -73,17 +73,7 @@ public class NoteDaoimp implements NoteDao {
 
     @Override
     public void save(Note note) {
-        try {
-            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SAVE_INSERT_SQL);
-            preparedStatement.setString(1, note.getTitle());
-            preparedStatement.setString(2, note.getContent());
-            preparedStatement.setInt(3, note.getTypeId());
 
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
