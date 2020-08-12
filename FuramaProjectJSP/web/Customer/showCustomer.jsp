@@ -63,19 +63,22 @@
                 <a href="">Home</a>
             </div>
             <div class="col-2">
-                <a href="">Employee</a>
+                <a href="/employeeServlet">Employee</a>
             </div>
             <div class="col-2">
                 <a href="">Customer</a>
             </div>
             <div class="col-2">
-                <a href="">Service</a>
+                <a href="/serviceServlet">Service</a>
             </div>
             <div class="col-2">
                 <a href="">Contact</a>
             </div>
             <div class="col-2">
-                <input type="text" class="form-control" placeholder="search">
+                <form action="">
+                <input type="text" class="form-control" placeholder="Input Your Text">
+                <input type="submit" value="Search">
+                </form>
             </div>
 
         </div>
@@ -91,7 +94,7 @@
             <a class="btn btn-info" href="btn btn-info">Show</a>
         </div>
         <div class="col-11">
-            <table class="table table-striped" id="pagination">
+            <table class="table table-striped">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -131,6 +134,7 @@
                 </c:forEach>
                 </tbody>
             </table>
+            <ul id="pagination"></ul>
         </div>
     </div>
 </div>
