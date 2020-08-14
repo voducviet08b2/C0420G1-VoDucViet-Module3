@@ -1,5 +1,6 @@
 package dao;
 
+import model.Position;
 import model.Service;
 import model.TypeRent;
 
@@ -14,6 +15,7 @@ public class ServiceDAOimp implements ServiceDAO {
     private static final String SAVE_INSERT_SQL =
             "insert into dichvu (ten_dich_vu, dien_tich,so_tang,so_nguoi_toi_da,chi_phi_thue,trang_thai,id_kieu_thue,id_loai_dich_vu) " +
                     "values (?, ?, ?, ?, ?, ?, ?,?)";
+    private final String SELECT_ALL_SERVICE_SQL = "select id, ten_dich_vu from dichvu";
 
     @Override
     public void create(Service service) {
@@ -32,5 +34,28 @@ public class ServiceDAOimp implements ServiceDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Service> findAll() {
+        List<Service> showList = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_ALL_SERVICE_SQL);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Service service = null;
+
+            while (resultSet.next()) {
+                service = new Service();
+                service.setId(resultSet.getInt("id"));
+                service.setTenDichVu(resultSet.getString("ten_dich_vu"));
+
+
+                showList.add(service);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return showList;
     }
 }

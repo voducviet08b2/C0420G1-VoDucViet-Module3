@@ -69,14 +69,15 @@
                 <a href="">Customer</a>
             </div>
             <div class="col-2">
-                <a href="/serviceServlet">Service</a>
+                <a href="/servicesServlet">Service</a>
             </div>
             <div class="col-2">
-                <a href="">Contact</a>
+                <a href="/contractServlet">Contact</a>
             </div>
-            <div class="col-2">
-                <form action="">
-                <input type="text" class="form-control" placeholder="Input Your Text">
+            <div class="col-2" >
+                <form action="/customerServlet" method="get" style="display: flex;margin-top: 15px">
+                    <input type="hidden" name="action" value="search">
+                <input type="text" class="form-control" name="keyword" placeholder=" Your Text">
                 <input type="submit" value="Search">
                 </form>
             </div>
@@ -91,7 +92,7 @@
         <div class="col-1" style="display: flex;flex-direction: column;justify-content: flex-start;align-items: flex-start;background-color: rgb(231, 231, 231)">
             <a class="btn btn-primary" href="/customerServlet?action=create">Create</a>
             <br>
-            <a class="btn btn-info" href="btn btn-info">Show</a>
+            <a class="btn btn-info" href="/customerServlet?action=showCustomerContract">Show Khách hàng hợp đồng</a>
         </div>
         <div class="col-11">
             <table class="table table-striped">
@@ -128,9 +129,20 @@
                     </c:forEach>
 <%--                    <td><c:out value="${customer.idLoaiKhach}"></c:out></td>--%>
                     <td><a class="btn btn-warning" href="/customerServlet?action=update&id=${customer.id}">Edit</a></td>
-                    <td><a class="btn btn-danger" href="/customerServlet?action=delete&id=${customer.id}">Delete</a></td>
+                    <td><a class="btn btn-danger btnDelete" onclick="myFunction()"  >Delete</a></td>
                     <td></td>
                 </tr>
+                    <script>
+                        function myFunction() {
+                            if(confirm("Confirm Delete?"))
+                            {
+                                window.location.href = '/customerServlet?action=delete&id=${customer.id}';
+                            }
+
+                        }
+
+                    </script>
+<%--                    href="/customerServlet?action=delete&id=${customer.id}"--%>
                 </c:forEach>
                 </tbody>
             </table>
@@ -141,4 +153,5 @@
 
 </div>
 </body>
+
 </html>

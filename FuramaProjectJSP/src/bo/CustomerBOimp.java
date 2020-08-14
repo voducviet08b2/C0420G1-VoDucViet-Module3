@@ -3,6 +3,7 @@ package bo;
 import dao.CustomerDAO;
 import dao.CustomerDAOimp;
 import model.Customer;
+import model.DTOCustomerContract;
 
 import java.util.List;
 
@@ -25,5 +26,15 @@ public class CustomerBOimp implements CustomerBO{
     @Override
     public void delete(int id) {
         customerDAO.delete(id);
+    }
+
+    @Override
+    public List<Customer> findSearch(String keyword) {
+        return customerDAO.findSearch(keyword);
+    }
+
+    @Override
+    public List<DTOCustomerContract> findAllCustomerContract() {
+        return customerDAO.findAllCustomerContract();
     }
 }

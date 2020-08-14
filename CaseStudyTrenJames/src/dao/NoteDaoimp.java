@@ -13,10 +13,10 @@ import java.util.List;
 
 public class NoteDaoimp implements NoteDao {
     private BaseDAO baseDAO = new BaseDAO();
-    private final String SELECT_ALL_NOTE_SQL = "select n.id,title,content,type_id from note n join note_type nt on n.type_id=nt.id";
-    private final String SELECT_ORDER_NOTE_SQL = "select n.id,title,content,type_id from note n join note_type nt on n.type_id=nt.id order by title";
+    private final String SELECT_ALL_NOTE_SQL = "select id,title,content,type_id from note n limit 3 offset ?";
+    private final String SELECT_ORDER_NOTE_SQL = "select n.id,title,content,type_id from note n join note_type nt on n.type_id=nt.id order by title ";
 
-    private final String SELECT_ALL_NOTETYPE_SQL = "select id,name,description from note_type";
+    private final String SELECT_ALL_NOTETYPE_SQL = "select id,name,description from note_type ";
     private static final String SAVE_INSERT_SQL =
             "insert into note (title, content,type_id) " +
                     "values (?, ?, ?)";
@@ -28,10 +28,11 @@ public class NoteDaoimp implements NoteDao {
             "from note\n" +
             "where title like ?;";
     @Override
-    public List<Note> findAll() {
+    public List<Note> findAll(int i) {
         List<Note> showList = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_ALL_NOTE_SQL);
+            preparedStatement.setInt(1,i);
             ResultSet resultSet = preparedStatement.executeQuery();
             Note note = null;
 

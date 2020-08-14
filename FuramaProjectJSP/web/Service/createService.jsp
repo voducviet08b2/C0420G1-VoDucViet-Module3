@@ -70,19 +70,19 @@
                     </div>
                     <div class="form-group">
                         <label for="">Diện tích</label>
-                        <input type="text" name="dienTich" class="form-control">
+                        <input type="text" name="dienTich" title="Diện tích thuê lơn hơn 0" pattern="[1-9]\d*" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="">Số Tầng</label>
-                        <input type="text" name="soTang" class="form-control">
+                        <input type="text" name="soTang" title="Số tầng lớn hơn 0" pattern="[1-9]\d*" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="">Số người tối đa</label>
-                        <input type="text" name="soNguoiToiDa" class="form-control">
+                        <input type="text" title="Số người lớn hơn 0" pattern="[1-9]\d*" name="soNguoiToiDa" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="">Chi Phí Thuê</label>
-                        <input type="text" name="chiPhiThue" class="form-control">
+                        <input type="text" name="chiPhiThue" title="Chi phí thuê lớn hơn 0" pattern="[1-9]\d*" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="">Trạng thái</label>

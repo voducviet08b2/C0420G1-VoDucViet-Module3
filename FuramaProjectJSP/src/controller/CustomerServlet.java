@@ -6,6 +6,7 @@ import bo.CustomerTypeBO;
 import bo.CustomerTypeBOimp;
 import model.Customer;
 import model.CustomerType;
+import model.DTOCustomerContract;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,6 +45,12 @@ public class CustomerServlet extends HttpServlet {
                 break;
             case "delete":
                 delete(request,response);
+                break;
+            case "search":
+                search(request,response);
+                break;
+            case "showCustomerContract":
+                showCustomerContract(request,response);
                 break;
             default:
                 show(request,response);
@@ -145,5 +152,22 @@ public class CustomerServlet extends HttpServlet {
         int id=Integer.parseInt(request.getParameter("id"));
         this.customerBO.delete(id);
         this.show(request,response);
+    }
+
+    public void search(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
+       String keyword=request.getParameter("keyword");
+        List<Customer> customerList=customerBO.findSearch(keyword);
+        request.setAttribute("customerList",customerList);
+        List<CustomerType> customerTypeList=customerTypeBO.findAll();
+        int count=customerList.size();
+        request.setAttribute("count",count);
+        request.setAttribute("customerList",customerList);
+        request.setAttribute("customerTypeList",customerTypeList);
+        request.getRequestDispatcher("Customer/showCustomer.jsp").forward(request,response);
+    }
+    public void showCustomerContract(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
+        List<DTOCustomerContract> listShow=this.customerBO.findAllCustomerContract();
+        request.setAttribute("listShow",listShow);
+        request.getRequestDispatcher("Customer/showCustomerContract.jsp").forward(request,response);
     }
 }

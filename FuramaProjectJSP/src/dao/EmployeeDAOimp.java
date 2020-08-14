@@ -20,6 +20,8 @@ public class EmployeeDAOimp implements EmployeeDAO {
             "ho_ten = ?,ngay_sinh= ?, so_cmnd =?, luong=?, sdt =?, email =?, dia_chi =?, id_vi_tri =?," +
             "id_trinh_do =?,id_bo_phan =? where id = ?;";
     private static final String DELETE_SQL = "delete from nhanvien where id=?";
+    private final String SELECT_SEARCH_employee_SQL = "select id,ho_ten,ngay_sinh,so_cmnd,luong,sdt,email,dia_chi,id_vi_tri" +
+            ",id_trinh_do,id_bo_phan from nhanvien where ho_ten like ?";
     @Override
     public List<Employee> findAll() {
         List<Employee> showList = new ArrayList<>();
@@ -102,5 +104,36 @@ public class EmployeeDAOimp implements EmployeeDAO {
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Employee> findSearch(String keyword) {
+        List<Employee> showList = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = this.baseDAO.getConnection().prepareStatement(SELECT_SEARCH_employee_SQL);
+            preparedStatement.setString(1,"%"+keyword+"%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Employee employee = null;
+
+            while (resultSet.next()) {
+                employee = new Employee();
+                employee.setId(resultSet.getInt("id"));
+                employee.setHoTen(resultSet.getString("ho_ten"));
+                employee.setNgaySinh(resultSet.getString("ngay_sinh"));
+                employee.setSoCMND(resultSet.getString("so_cmnd"));
+                employee.setLuong(resultSet.getInt("luong"));
+                employee.setSdt(resultSet.getString("sdt"));
+                employee.setEmail(resultSet.getString("email"));
+                employee.setDiaChi(resultSet.getString("dia_chi"));
+                employee.setIdViTri(resultSet.getString("id_vi_tri"));
+                employee.setIdTrinhDo(resultSet.getString("id_trinh_do"));
+                employee.setIdBoPhan(resultSet.getString("id_bo_phan"));
+                showList.add(employee);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return showList;
     }
 }

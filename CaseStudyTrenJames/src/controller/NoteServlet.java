@@ -83,7 +83,7 @@ public class NoteServlet extends HttpServlet {
     public void update(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
         int id=Integer.parseInt(request.getParameter("id"));
         int idSearch=0;
-        List<Note> noteList = noteBO.findAll();
+        List<Note> noteList = noteBO.findAll(1);
         for(int i=0;i<noteList.size();i++){
             if(id==noteList.get(i).getId()){
                 idSearch=i;
@@ -125,8 +125,14 @@ public class NoteServlet extends HttpServlet {
         this.show(request,response);
     }
     public void show(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
-        List<Note> noteList=noteBO.findAll();
+        String page=request.getParameter("page");
+        if(page==null){
+            page="0";
+        }
+        List<Note> noteList=noteBO.findAll(Integer.parseInt(page));
         List<NoteType> noteTypeList=noteBO.findAllType();
+        int totalPage=noteList.size()/3+1;
+        request.setAttribute("totalPage",totalPage);
         request.setAttribute("noteList",noteList);
         request.setAttribute("noteTypeList",noteTypeList);
         request.getRequestDispatcher("show.jsp").forward(request,response);

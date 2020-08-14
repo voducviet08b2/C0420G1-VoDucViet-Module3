@@ -66,23 +66,23 @@
                 <input type="hidden" name="action" value="confirmCreate" >
                 <div class="form-group">
                     <label for="">Họ tên khách hàng</label>
-                    <input type="text" name="hoTen" class="form-control">
+                    <input type="text" name="hoTen"  class="form-control" title="Chữ cái đầu viết hoa" pattern="([A-Z]([a-z])* ?)+">
                 </div>
                 <div class="form-group">
                     <label for="">Ngày sinh khách hàng</label>
-                    <input type="text" name="ngaySinh" class="form-control">
+                    <input type="text" name="ngaySinh" placeholder="YYYY-MM-dd" pattern="(19[0-9][0-9])|(20(00|01|02)-[0-9]{2}-[0-9]{2}" title="Ngày sinh không đúng định dạng" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="">Số CMND</label>
-                    <input type="text" name="soCMND" class="form-control">
+                    <input type="text" name="soCMND" pattern="(\d{9}|\d{12})" title="CMND không đúng định dạng" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="">Số điện thoại</label>
-                    <input type="text" name="sdt" class="form-control">
+                    <input type="text" name="sdt" pattern="(090|091)[\d]{7}" title="Số điện thoại sai định dạng" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input type="text" name="email" class="form-control">
+                    <input type="text" name="email" pattern="[a-zA-Z0-9]+@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)" title="Email không đúng định dạng" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="">Địa chỉ</label>

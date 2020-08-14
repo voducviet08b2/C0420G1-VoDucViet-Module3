@@ -46,6 +46,9 @@ public class EmployeeServlet extends HttpServlet {
             case "delete":
                 delete(request,response);
                 break;
+            case "search":
+                search(request,response);
+                break;
             default:
                 show(request,response);
                 break;
@@ -169,5 +172,19 @@ public class EmployeeServlet extends HttpServlet {
         int id=Integer.parseInt(request.getParameter("id"));
         this.employeeBO.delete(id);
         this.show(request,response);
+    }
+    public void search(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
+        String keyword=request.getParameter("keyword");
+        List<Employee> employeeList=employeeBO.findSearch(keyword);
+        request.setAttribute("employeeList",employeeList);
+        List<Position> positionList=positionDAO.findAll();
+        List<Degree> degreeList=degreeDAO.findAll();
+        List<Division> divisionList=divisionDAO.findAll();
+        int count=employeeList.size();
+        request.setAttribute("count",count);
+        request.setAttribute("positionList",positionList);
+        request.setAttribute("degreeList",degreeList);
+        request.setAttribute("divisionList",divisionList);
+        request.getRequestDispatcher("Employee/showEmployee.jsp").forward(request,response);
     }
 }

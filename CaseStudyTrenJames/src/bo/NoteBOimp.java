@@ -11,8 +11,8 @@ public class NoteBOimp implements NoteBO{
     private NoteDao noteDao=new NoteDaoimp();
 
     @Override
-    public List<Note> findAll() {
-        return noteDao.findAll();
+    public List<Note> findAll(int i) {
+        return noteDao.findAll(i);
     }
 
     @Override

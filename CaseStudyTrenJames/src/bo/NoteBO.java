@@ -6,7 +6,7 @@ import model.NoteType;
 import java.util.List;
 
 public interface NoteBO {
-    List<Note> findAll();
+    List<Note> findAll(int i);
     List<NoteType> findAllType();
     void save(Note note);
     List<Note> findAllDetail(int id);

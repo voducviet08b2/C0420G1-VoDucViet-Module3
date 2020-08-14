@@ -26,4 +26,9 @@ public class EmployeeBOimp implements EmployeeBO{
     public void delete(int id) {
         employeeDAO.delete(id);
     }
+
+    @Override
+    public List<Employee> findSearch(String keyword) {
+        return employeeDAO.findSearch(keyword);
+    }
 }

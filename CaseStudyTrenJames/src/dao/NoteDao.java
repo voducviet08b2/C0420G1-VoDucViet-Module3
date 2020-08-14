@@ -5,7 +5,7 @@ import model.NoteType;
 import java.util.List;
 
 public interface NoteDao {
-        List<Note> findAll();
+        List<Note> findAll(int i);
         List<NoteType> findAllType();
         void save(Note note);
         List<Note> findAllDetail(int id);

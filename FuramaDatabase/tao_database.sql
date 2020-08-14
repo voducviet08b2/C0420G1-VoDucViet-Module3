@@ -1,6 +1,12 @@
 create database furama_project;
 use furama_project;
 
+select k.id,k.ho_ten,h.ngay_lam_hop_dong,dvdk.ten_dich_vu_di_kem
+from khachhang k
+inner join hopdong h on h.id_khach_hang=k.id
+inner join hopdongchitiet hdct on hdct.id_hop_dong=h.id
+inner join dichvudikem dvdk on hdct.id_dich_vu_di_kem=dvdk.id;
+
 create table ViTri(
 id int primary key auto_increment,
 ten_vi_tri varchar(45) not null

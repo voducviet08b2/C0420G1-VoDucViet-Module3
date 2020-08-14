@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "ServiceServlet",urlPatterns = "/serviceServlet")
+@WebServlet(name = "ServicesServlet",urlPatterns = "/servicesServlet")
 public class ServiceServlet extends HttpServlet {
     private TypeRentDAO typeRentDAO =new TypeRentDAOimp();
     private TypeServiceDAO typeServiceDAO =new TypeServiceDAOimp();

@@ -45,6 +45,11 @@
         <td><a class="btn btn-danger" href="/noteServlet?action=delete&id=${note.id}">Xóa</a></td>
     </tr>
     </c:forEach>
+    <ul style="list-style: none;display: flex">
+        <c:forEach begin="1" end="${totalPage}" var="val">
+            <li><a href="/noteServlet?page=${val}"><c:out value="${val}"/></a></li>
+        </c:forEach>
+    </ul>
 
     </tbody>
 </table>

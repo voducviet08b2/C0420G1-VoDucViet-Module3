@@ -75,7 +75,11 @@
                 <a href="">Contact</a>
             </div>
             <div class="col-2">
-                <input type="text" class="form-control" placeholder="search">
+                <form action="/employeeServlet" method="get" style="display: flex;margin-top: 15px">
+                    <input type="hidden" name="action" value="search">
+                    <input type="text" class="form-control" name="keyword" placeholder=" Your Text">
+                    <input type="submit" value="Search">
+                </form>
             </div>
 
         </div>
@@ -90,7 +94,7 @@
                 <br>
                 <a class="btn btn-info" href="btn btn-info">Show</a>
             </div>
-            <div class="col-11">
+            <div class="col-11">da
                 <table class="table table-striped" >
                     <thead>
                     <tr>
